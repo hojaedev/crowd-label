@@ -4,7 +4,7 @@ import BaseLayout from "../components/Layout";
 const LabelPage = () => {
   return (
     <BaseLayout>
-      <div class="flex items-center justify-center w-full">
+      <div className="flex items-center justify-center w-full">
         <h1>Hello World!</h1>
       </div>
     </BaseLayout>

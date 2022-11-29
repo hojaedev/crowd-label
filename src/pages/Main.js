@@ -5,7 +5,6 @@ import { ethers } from "ethers";
 
 
 const MainPage = () => {
-  
   async function metamaskLogin() {
       // A Web3Provider wraps a standard Web3 provider, which is
       // what MetaMask injects as window.ethereum into each page
