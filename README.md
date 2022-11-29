@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# 🚀 CrowdLabel ($CROL)
+<span style="background: rgb(122,184,226);
+background: linear-gradient(90deg, rgba(122,184,226,1) 0%, rgba(235,20,26,1) 100%); font-size: 17px;   -webkit-text-fill-color: transparent;   -webkit-background-clip: text;
+">Powering the Next Generation ML Tasks: Decentralized Distributed Labeling Platform</span>
+# Overview
+This project leverages the power of the community to crowdsource images from 1) various domains and 2) diverse groups. Users now have a monetary incentive to share images that are relevant and have high demand.
+Several industries have yet to reap the benefits of Machine Learning due to limited access to high-quality data and technical human resources.
+Currently, there is active research in both industry and academia regarding generic human-level tasks.
+However, limited quality data in expert domains, i.e. healthcare and industrial applications, hinders ML application.
+With this platform, hospitals can now securely pool CT scans of lung cancer patients and crowdsource expert labelers with domain knowledge to prepare ML training data at scale.
+Another issue is that data skews can cause bias in deployed models, an issue that has received increased attention lately.
+Crowdsourcing from a diverse group of racial and ethnic groups that reflect different cultures thought, and interest can provide balanced datasets that equally represents diversity.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Crowdsource Labelers
+This platform makes it easier to crowdsource labelers from expert domains.
+Labelers are now incentivized to participate in their free time to earn token rewards by pooling expert knowledge into the platform.
+A group of doctors can participate to label lung cancer patients' CT scans or x-ray images.
+Also, manufacturing industry QA engineers can participate to label products with defects.
+Anyone with a wallet address can join immediately without complicated authentication procedures.
+The quality of labelers is algorithmically determined by monitoring performance based on the ground-truth overlap.
+The platform uses a native algorithm inspired by reCAPTCHA to vote on a correct label.
+With preliminary rounds based on pre-labeled data, users are asked to label in a domain-specific task.
+Only users above a certain Intersect Over Union (IOU) score will be allowed to participate in labeling tasks related to the domain.
+Future labeling rewards will depend on the IOU score of all labels from other experts.
+Users with high accuracy will have boosted voting power, which incentivizes them to maintain high accuracy.
+This way, individual incentive ensures label quality instead of centralized human-in-the-loop quality assurance.
 
-## Available Scripts
+## Data Privacy and Ownership
+With this platform, users can now opt-in (at will) to monetize data (instead of opting out from web2 services) and track ownership of their data by browsing the chain.
+Uploaded user images will generate unique hashes that will be included in the transaction of a dataset purchase from an organization or company.
+If an image is included in the purchased dataset and used in multiple training iterations, the user will be fully compensated and aware of the use.
 
-In the project directory, you can run:
+## Demand Side
+Companies can now tap into crowdsourced high-quality labeled datasets from diverse domains and underrepresented groups.
+Also, in industry settings, acquiring licensing is often complicated and many sensitive data privacy requirements delay deployment.
+With this platform, companies can make dataset purchases with tokens and use crowdsourced data for commercially deployed models.
+Hopefully, companies can also create consortiums on top of this platform to share and crowdsource high-quality data with other industry players.
 
-### `npm start`
+# Architecture
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Acknowledgements
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Authors
+- `Hojae Yoon (hy2714)`
+- `Harry Lee (jl5271)`
+- `Seong Moon Jo (sj3014)`
