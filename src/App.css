@@ -6,10 +6,19 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.page {
+  min-height: 100vh;
+  min-width: 100vh;
 }
+
+#first_page {
+  background-color: Aquamarine;
+}
+
+#second_page {
+  background-color: Beige;
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
