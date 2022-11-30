@@ -9,6 +9,7 @@
     "@usedapp/core": "^1.2.2",
     "buffer": "^6.0.3",
     "ethers": "^5.7.2",
+    "image-labeler-react": "^1.2.3",
     "ipfs-http-client": "^59.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -16,7 +17,8 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
     "web-vitals": "^2.1.4",
-    "web3": "^1.8.1"
+    "web3": "^1.8.1",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",
