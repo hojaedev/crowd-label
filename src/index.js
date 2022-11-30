@@ -4,11 +4,15 @@ import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import router from "./routes";
+import { AuthProvider } from "./contexts/AuthContext";
+import Composer from "./components/Composer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Composer components={[[AuthProvider]]}>
+      <RouterProvider router={router} />
+    </Composer>
   </React.StrictMode>,
 );
 

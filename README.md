@@ -40,6 +40,20 @@ Hopefully, companies can also create consortiums on top of this platform to shar
 
 ## Acknowledgements
 
+
+## Development Notes
+1. Running IPFS Daemon.
+```bash
+# resolve cors issue
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"*\"]"
+ipfs daemon
+```
+2. Run deterministic ganache with persistent address.
+```bash
+ganache-cli -d
+```
+
+
 ## Authors
 - `Hojae Yoon (hy2714)`
 - `Harry Lee (jl5271)`

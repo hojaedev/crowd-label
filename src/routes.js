@@ -1,3 +1,5 @@
+import React from "react";
+
 import { createBrowserRouter } from "react-router-dom";
 import { MainPage, UploadPage, BrowsePage, LabelPage } from "../src/pages";
 

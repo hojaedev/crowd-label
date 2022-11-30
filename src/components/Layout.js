@@ -3,7 +3,7 @@ import Header from "./Header";
 
 const BaseLayout = ({ children }) => {
   return (
-    <div className="bg-black">
+    <div className="">
       <Header />
       {children}
     </div>
