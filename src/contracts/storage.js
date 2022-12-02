@@ -29,3 +29,34 @@ const abi = [
 ];
 
 export { contractAddress, abi };
+const contractAddress = "0xa131AD247055FD2e2aA8b156A11bdEc81b9eAD95";
+const abi = [
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "x",
+        type: "string",
+      },
+    ],
+    name: "setHash",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getHash",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+export { contractAddress, abi };

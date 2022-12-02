@@ -6,16 +6,19 @@ import { ethers } from "ethers";
 import { create } from "ipfs-http-client";
 import IPFSImage from "../components/IPFSImage";
 import { ToastContainer, toast } from "react-toastify";
+import { useAuth } from "../contexts/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 
 const UploadPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [contract, setContract] = useState(null);
   const [imageHash, setImageHash] = useState(null);
+  const { address, provider, signer } = useAuth();
 
   useEffect(() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+    const signer1 = provider.getSigner();
+    console.log(signer1, signer);
     setContract(new ethers.Contract(contractAddress, abi, signer));
   }, []);
 
@@ -23,22 +26,21 @@ const UploadPage = () => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const signStorageContract = async hash => {
-    try {
-      const hashSet = await contract.setHash(hash);
-      hashSet.wait();
-      toast.success("Image registered. Eligible for rewards.");
-    } catch (e) {
-      toast.error("Failed image registration");
-      console.log(e);
-    }
+  const signStorageContract = async h => {
+    console.log(await signer.get)
+    console.log("sign contract");
+    // const getValue = await contract.getHash();
+    // console.log(getValue);
+    // const result = await contract.setHash(h);
+    // console.log(result);
+    // console.log("value", getValue);
   };
 
   const onSubmit = async () => {
     try {
       // connect to a different API
       const client = create({ url: config.ipfs.apiRoute });
-      const { path } = await client.add(selectedFile);
+      const { cid, path } = await client.add(selectedFile);
       setImageHash(path);
       toast.success("Uploaded to IPFS");
       signStorageContract(path);
