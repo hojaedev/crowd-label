@@ -10,7 +10,7 @@ import { useAuth } from "../contexts/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 
 const UploadPage = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState(null);
   const [contract, setContract] = useState(null);
   const [imageHash, setImageHash] = useState(null);
   const { address, provider, signer } = useAuth();
@@ -23,27 +23,31 @@ const UploadPage = () => {
   }, []);
 
   const changeHandler = event => {
-    setSelectedFile(event.target.files[0]);
+    setSelectedFiles(event.target.files);
   };
 
-  const signStorageContract = async h => {
-    console.log(await signer.get)
-    console.log("sign contract");
-    // const getValue = await contract.getHash();
-    // console.log(getValue);
-    // const result = await contract.setHash(h);
-    // console.log(result);
-    // console.log("value", getValue);
+  const signStorageContract = async hash => {
+    try {
+      const hashSet = await contract.store(hash);
+      hashSet.wait();
+      toast.success("Image registered. Eligible for rewards.");
+    } catch (e) {
+      toast.error("Failed image registration");
+      console.log(e);
+    }
   };
 
   const onSubmit = async () => {
     try {
       // connect to a different API
       const client = create({ url: config.ipfs.apiRoute });
-      const { cid, path } = await client.add(selectedFile);
-      setImageHash(path);
+      const paths = [];
+      for await (const { path } of client.addAll(selectedFiles)) {
+        paths.push(path);
+      }
+      setImageHash(paths);
       toast.success("Uploaded to IPFS");
-      signStorageContract(path);
+      signStorageContract(paths);
     } catch (error) {
       toast.error("Failed IPFS upload");
       console.error("IPFS error ", error);
@@ -89,22 +93,24 @@ const UploadPage = () => {
               type="file"
               className="hidden"
               onChange={changeHandler}
+              multiple
             />
           </label>
         </div>
         <button
           type="button"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:bg-slate-500 disabled:hover:bg-slate-500"
-          disabled={selectedFile ? false : true}
+          disabled={selectedFiles ? false : true}
           onClick={onSubmit}
         >
           Upload Image
         </button>
-        {imageHash && (
-          <div>
-            <IPFSImage hash={imageHash} />
-          </div>
-        )}
+        {imageHash &&
+          imageHash.map(p => {
+            <div>
+              <IPFSImage hash={p} />
+            </div>;
+          })}
       </div>
     </BaseLayout>
   );
