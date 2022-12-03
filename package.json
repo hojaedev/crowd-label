@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@openzeppelin/contracts": "^4.8.0",
     "hardhat": "^2.12.3",
     "tailwindcss": "^3.2.4"
   }
