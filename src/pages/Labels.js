@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BaseLayout from "../components/Layout";
+import {BaseLayout} from "../components/Layout";
 
 const LabelPage = () => {
   return (

@@ -10,4 +10,8 @@ const BaseLayout = ({ children }) => {
   );
 };
 
-export default BaseLayout;
+const ComponentLayout = ({ children }) => {
+  return <div className="px-28">{children}</div>;
+};
+
+export { BaseLayout, ComponentLayout };
