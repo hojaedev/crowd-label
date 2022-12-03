@@ -25,11 +25,11 @@ const BrowsePage = () => {
       <div className="container grid grid-cols-4 gap-2 mx-auto">
         {images &&
           images.map((image, index) => (
-            <div className="w-full rounded">
+            <div className="w-full rounded border-3 border-red-700">
               <span class="absolute inset mx-1 my-1 bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
                 {parseInt(image.label_count._hex)} Labels
               </span>
-              <IPFSImage hash={image[3]} />
+              <IPFSImage hash={image[3]} selected={true} className="border-4 border-green-400 brightness-50"/>
             </div>
           ))}
       </div>

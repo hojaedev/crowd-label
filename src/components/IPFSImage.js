@@ -1,8 +1,12 @@
 import config from "../../src/config";
 
-const IPFSImage = ({ hash }) => {
+const IPFSImage = ({ hash, className }) => {
   return (
-    <img src={`${config.ipfs.defaultGateway}/${hash}`} alt="ipfs preview" />
+    <img
+      src={`${config.ipfs.defaultGateway}/${hash}`}
+      alt="ipfs preview"
+      className={className}
+    />
   );
 };
 

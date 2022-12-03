@@ -11,8 +11,7 @@ const Header = () => {
     if (!isLoggedIn) setDropdownOpen(false);
   }, [isLoggedIn]);
 
-  useEffect(() => {
-  }, [isLoggedIn, handleLogin, getShortAddress]);
+  useEffect(() => {}, [isLoggedIn, handleLogin, getShortAddress]);
 
   return (
     <nav className="bg-white border-gray-200 px-2 md:px-4 py-2.5 dark:bg-gray-900">
@@ -20,7 +19,7 @@ const Header = () => {
         <a href="/" className="flex items-center">
           <img
             src="/logo.svg"
-            className="mr-3 h-6 sm:h-9"
+            className="mr-3 h-6 sm:h-9 brightness-75	"
             alt="Flowbite Logo"
           />
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
