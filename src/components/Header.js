@@ -14,9 +14,9 @@ const Header = () => {
   useEffect(() => {}, [isLoggedIn, handleLogin, getShortAddress]);
 
   return (
-    <nav className="bg-black border-gray-200 px-28 py-2.5">
-      <div className="relative inline-block flex flex-wrap justify-between items-center">
-        <a href="/" className="flex items-center">
+    <nav className="bg-black border-gray-200 px-28 py-2.5 w-screen z-10 sticky">
+      <div className="flex flex-wrap justify-between items-center">
+        <Link to={"/"} className="flex items-center">
           <img
             src="/logo.svg"
             className="mr-3 h-6 sm:h-9 brightness-75	"
@@ -25,7 +25,7 @@ const Header = () => {
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
             Crowd Label
           </span>
-        </a>
+        </Link>
         {isLoggedIn && (
           <div className="flex flex-row space-x-10 list-none">
             <li>
@@ -54,78 +54,6 @@ const Header = () => {
             </li>
           </div>
         )}
-        {/* <Dropdown label={isLoggedIn ? getShortAddress() : "Login with Wallet"} onClick={handleLogin}>
-          <Dropdown.Header>
-            <span className="block text-sm">Bonnie Green</span>
-          </Dropdown.Header>
-        </Dropdown> */}
-        {/* 
-        <button
-          id="dropdownDefault"
-          data-dropdown-toggle="dropdown"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          type="button"
-        >
-          Dropdown button{" "}
-          <svg
-            className="ml-2 w-4 h-4"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            ></path>
-          </svg>
-        </button> */}
-
-        {/* <div
-          id="dropdown"
-          className=" relative inline-block text-left  bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
-        >
-          <ul
-            className="py-1 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownDefault"
-          >
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Dashboard
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Settings
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Earnings
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Sign out
-              </a>
-            </li>
-          </ul>
-        </div> */}
         <div className="relative inline-block text-left">
           <div>
             <button
@@ -169,15 +97,15 @@ const Header = () => {
               onClick={handleLogout}
             >
               <div className="py-1" role="none">
-                <a
-                  href="#"
+                <Link
+                  to={"/"}
                   className="text-gray-700 block px-4 py-2 text-sm"
                   role="menuitem"
                   tabindex="-1"
                   id="menu-item-0"
                 >
                   Disconnect Wallet
-                </a>
+                </Link>
               </div>
             </div>
           )}
