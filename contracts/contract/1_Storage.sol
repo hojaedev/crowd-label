@@ -8,29 +8,83 @@ contract Storage {
         uint256 label_count;
         uint256 use_count;
         bool registered;
+        string hash;
+        address owner;
     }
 
     mapping(string => File) public files;
+    mapping(address => uint256) public reward;
     string[] public hashes;
+    uint256 public totalLabeled;
 
     function store(string[] memory ids) public {
         for (uint256 i = 0; i < ids.length; i++) {
             string memory k = ids[i];
-            files[k] = File({label_count: 0, use_count: 0, registered: true});
+            files[k] = File({
+                label_count: 0,
+                use_count: 0,
+                registered: true,
+                hash: k,
+                owner: msg.sender
+            });
             hashes.push(k);
         }
     }
 
-    function retrieveImage(string memory id) public view returns (File memory) {
-        // console.log("this is files", files);
+    function getImage(string memory id) public view returns (File memory) {
         return files[id];
     }
 
-    function getAllImage() public view returns (File[] memory) {
-        File[] memory ret = new File[](hashes.length);
+    function getAllImage(bool filterLabelRequired)
+        public
+        view
+        returns (File[] memory)
+    {
+        uint256 size = hashes.length;
+        if (filterLabelRequired) {
+            size -= totalLabeled;
+        }
+        File[] memory ret = new File[](size);
         for (uint256 i = 0; i < hashes.length; i++) {
+            if (filterLabelRequired && files[hashes[i]].label_count > 5) {
+                continue;
+            }
             ret[i] = (files[hashes[i]]);
         }
         return ret;
     }
+
+    function getMyImage() public view returns (File[] memory) {
+        File[] memory ret = new File[](hashes.length);
+        for (uint256 i = 0; i < hashes.length; i++) {
+            if (files[hashes[i]].owner == msg.sender) {
+                ret[i] = (files[hashes[i]]);
+            }
+        }
+        return ret;
+    }
+
+    function addLabelCount(string memory id) external {
+        assert(files[id].registered == true);
+        files[id].label_count++;
+    }
+
+    function getLabelCount(string memory id)
+        public
+        view
+        returns (bool, uint256)
+    {
+        return (files[id].registered, files[id].label_count);
+    }
+
+    function useImages(string[] memory ids) external {
+        for (uint256 i = 0; i < ids.length; i++) {
+            assert(files[ids[i]].registered == true);
+        }
+        for (uint256 i = 0; i < ids.length; i++) {
+            files[ids[i]].use_count++;
+        }
+    }
+
+    // TODO: Distribute reward
 }
