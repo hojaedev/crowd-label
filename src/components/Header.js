@@ -12,7 +12,6 @@ const Header = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    console.log({ isLoggedIn, handleLogin, getShortAddress });
   }, [isLoggedIn, handleLogin, getShortAddress]);
 
   return (
@@ -29,14 +28,13 @@ const Header = () => {
           </span>
         </a>
         {isLoggedIn && (
-          <div className="flex flex-row space-x-10">
+          <div className="flex flex-row space-x-10 list-none">
             <li>
               <Link
                 to="/upload"
                 className='"block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"'
               >
-                {" "}
-                Upload{" "}
+                Upload
               </Link>
             </li>
             <li>
@@ -44,8 +42,7 @@ const Header = () => {
                 to="/label"
                 className='"block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"'
               >
-                {" "}
-                Label{" "}
+                Label
               </Link>
             </li>
             <li>
@@ -53,8 +50,7 @@ const Header = () => {
                 to="/browse"
                 className='"block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"'
               >
-                {" "}
-                Browse{" "}
+                Browse
               </Link>
             </li>
           </div>
@@ -156,9 +152,9 @@ const Header = () => {
                 aria-hidden="true"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </button>
