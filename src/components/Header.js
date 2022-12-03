@@ -14,7 +14,7 @@ const Header = () => {
   useEffect(() => {}, [isLoggedIn, handleLogin, getShortAddress]);
 
   return (
-    <nav className="bg-white border-gray-200 px-2 md:px-4 py-2.5 dark:bg-gray-900">
+    <nav className="bg-black border-gray-200 px-2 md:px-4 py-2.5">
       <div className="relative inline-block flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <a href="/" className="flex items-center">
           <img
