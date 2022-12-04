@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BaseLayout } from "../components/Layout";
 import config from "../config";
-import { abi, contractAddress } from "../contracts/storage";
-import { ethers } from "ethers";
 import { create } from "ipfs-http-client";
 import IPFSImage from "../components/IPFSImage";
 import { ToastContainer, toast } from "react-toastify";
-import { useAuth } from "../contexts/AuthContext";
-import "react-toastify/dist/ReactToastify.css";
 import { ComponentLayout } from "../components/Layout";
+import { useContract } from "../contexts/ContractContext";
 
 const UploadPage = () => {
   const [selectedFiles, setSelectedFiles] = useState(null);
-  const [contract, setContract] = useState(null);
   const [imageHash, setImageHash] = useState(null);
-  const { address, provider, signer } = useAuth();
-
-  useEffect(() => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer1 = provider.getSigner();
-    console.log(signer1, signer);
-    setContract(new ethers.Contract(contractAddress, abi, signer));
-  }, []);
+  const {storage} = useContract();
 
   const changeHandler = event => {
     setSelectedFiles(event.target.files);
@@ -29,7 +18,7 @@ const UploadPage = () => {
 
   const signStorageContract = async hash => {
     try {
-      const hashSet = await contract.store(hash);
+      const hashSet = await storage.store(hash);
       hashSet.wait();
       toast.success("Image registered. Eligible for rewards.");
     } catch (e) {
@@ -46,6 +35,7 @@ const UploadPage = () => {
       for await (const { path } of client.addAll(selectedFiles)) {
         paths.push(path);
       }
+      console.log(paths);
       setImageHash(paths);
       toast.success("Uploaded to IPFS");
       signStorageContract(paths);
@@ -55,7 +45,6 @@ const UploadPage = () => {
     }
   };
 
-  // const instantiateContract = () => {};
   return (
     <BaseLayout>
       <ToastContainer />

@@ -48,10 +48,20 @@ Hopefully, companies can also create consortiums on top of this platform to shar
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"*\"]"
 ipfs daemon
 ```
-2. Run deterministic ganache with persistent address.
+2. [Optional] Run directly with deterministic (persistent address) Ganache.
 ```bash
 ganache-cli -d
 ```
+3. [Preferred] Run with hardhat.
+```shell
+npx hardhat help
+npx hardhat test
+REPORT_GAS=true npx hardhat test
+npx hardhat node
+npx hardhat run scripts/deploy.js --network localhost
+```
+
+
 
 
 ## Authors

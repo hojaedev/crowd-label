@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { BaseLayout } from "../components/Layout";
 import IPFSImage from "../components/IPFSImage";
-import { abi, contractAddress } from "../contracts/storage";
-import { ethers } from "ethers";
-import { useAuth } from "../contexts/AuthContext";
 import { ComponentLayout } from "../components/Layout";
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
+import { useContract } from "../contexts/ContractContext";
 
 const BrowsePage = () => {
-  const [contract, setContract] = useState(null);
   const [images, setImages] = useState(null);
   const [selectedImages, setSelectedImages] = useState(new Set());
-  const { signer } = useAuth();
+  const { storage } = useContract();
+
   useEffect(() => {
-    const contract = new ethers.Contract(contractAddress, abi, signer);
-    setContract(contract);
-    (async () => {
-      const data = await contract.getAllImage(false);
-      setImages(data);
-    })();
-  }, []);
+    const getImages = async () => {
+      const images = await storage.getAllImage(false);
+      setImages(images);
+    };
+    getImages();
+  }, [storage]);
 
   return (
     <BaseLayout>

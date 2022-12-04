@@ -3,7 +3,7 @@
 pragma solidity >=0.7.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 import "./1_Storage.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/contracts/utils/math/Math.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
 
 struct Coordinate {
     uint256 x1;

@@ -1,18 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import { RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import router from "./routes";
+import { RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
-import Composer from "./components/Composer";
+import { ContractProvider } from "./contexts/ContractContext";
+import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Composer components={[[AuthProvider]]}>
-      <RouterProvider router={router} />
-    </Composer>
+    <AuthProvider>
+      <ContractProvider>
+        <RouterProvider router={router} />
+      </ContractProvider>
+    </AuthProvider>
   </React.StrictMode>,
 );
 
