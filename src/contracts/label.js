@@ -1,50 +1,5 @@
-const labelAddress = "0x390EB53A2BF4892F047082687b9171688B6cFf6D";
+const labelAddress = "0xd52fb61f250b1d92C9DcB81852B373D9B2Aff4d3";
 const abi = [
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "id",
-        type: "string",
-      },
-      {
-        components: [
-          {
-            internalType: "uint256",
-            name: "x1",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "x2",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "y1",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "y2",
-            type: "uint256",
-          },
-          {
-            internalType: "address",
-            name: "owner",
-            type: "address",
-          },
-        ],
-        internalType: "struct Coordinate",
-        name: "coord",
-        type: "tuple",
-      },
-    ],
-    name: "addLabel",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
   {
     inputs: [
       {
@@ -55,6 +10,19 @@ const abi = [
     ],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "id",
+        type: "string",
+      },
+    ],
+    name: "addLabel",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     inputs: [

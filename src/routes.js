@@ -16,10 +16,10 @@ const router = createBrowserRouter([
     path: "/browse",
     element: <BrowsePage />,
   },
-  // {
-  //   path: "/label",
-  //   element: <LabelPage />,
-  // },
+  {
+    path: "/label",
+    element: <LabelPage />,
+  },
 ]);
 
 export default router;

@@ -9,17 +9,17 @@ const hre = require("hardhat");
 async function main() {
   const Storage = await hre.ethers.getContractFactory("Storage");
   // const Token = await hre.ethers.getContractFactory("CrowdLabelToken");
-  // const Label = await hre.ethers.getContractFactory("Label");
+  const Label = await hre.ethers.getContractFactory("Label");
   const storage = await Storage.deploy();
   await storage.deployed();
   // const token = await Token.deploy();
   // await token.deployed();
-  // const label = await Label.deploy(storage.address);
-  // await label.deployed();
+  const label = await Label.deploy(storage.address);
+  await label.deployed();
 
   console.log("Storage deployed to:", storage.address);
   // console.log("Token deployed to:", token.address);
-  // console.log("Label deployed to:", label.address);
+  console.log("Label deployed to:", label.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -4,11 +4,12 @@ pragma solidity >=0.7.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 import "./1_Storage.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
+import "hardhat/console.sol";
 
 struct Coordinate {
     uint256 x1;
-    uint256 x2;
     uint256 y1;
+    uint256 x2;
     uint256 y2;
     address owner;
 }
@@ -27,21 +28,22 @@ contract Label {
         storageContract = Storage(_addr);
     }
 
-    function addLabel(string memory id, Coordinate memory coord) public {
+    function addLabel(string memory id, uint256 x1, uint256 y1, uint256 x2, uint256 y2) public {
         bool registered;
         uint256 labelCount;
         (registered, labelCount) = storageContract.getLabelCount(id);
         assert(registered);
         if (labelCount >= 5) return;
+        Coordinate memory coord = Coordinate(x1, y1, x2, y2, msg.sender);
         labels[id].push(coord);
         storageContract.addLabelCount(id);
 
-        if (labelCount == 5) {
+        if (labelCount == 4) {
             reward(id);
         }
     }
 
-    function getLabel(string memory id) public view returns (Coordinate[] memory) {
+    function getLabels(string memory id) public view returns (Coordinate[] memory) {
         return labels[id];
     }
 

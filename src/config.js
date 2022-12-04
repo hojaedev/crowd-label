@@ -7,10 +7,10 @@ const config = {
     providerURL: "http://localhost:8545",
   },
   contractAddress: {
-    storage: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+    storage: "0x59b670e9fA9D0A427751Af201D676719a970857b",
     token: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-    label: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-  }
+    label: "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
+  },
 };
 
 export default config;
