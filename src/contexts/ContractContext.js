@@ -8,6 +8,7 @@ import React, {
 import config from "../config";
 import { ethers } from "ethers";
 import storageContract from "../artifacts/contracts/1_Storage.sol/Storage.json";
+import tokenContract from "../artifacts/contracts/2_Token.sol/CrowdLabelToken.json";
 import { useAuth } from "./AuthContext";
 
 const ContractContext = createContext();
@@ -22,6 +23,7 @@ const useContract = () => {
 
 const ContractProvider = ({ children }) => {
   const [storage, setStorage] = useState(null);
+  const [token, setToken] = useState(null);
   const { signer } = useAuth();
   useEffect(() => {
     setStorage(
@@ -31,13 +33,21 @@ const ContractProvider = ({ children }) => {
         signer,
       ),
     );
+    setToken(
+      new ethers.Contract(
+        config.contractAddress.token,
+        tokenContract.abi,
+        signer,
+      ),
+    );
   }, [signer]);
 
   const memoedValue = useMemo(
     () => ({
       storage,
+      token,
     }),
-    [storage],
+    [storage, token],
   );
   return (
     <ContractContext.Provider value={memoedValue}>

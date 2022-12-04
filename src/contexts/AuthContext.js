@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import { ethers } from "ethers";
 
-
 const AuthContext = createContext();
 const useAuth = () => {
   const context = useContext(AuthContext);
@@ -25,20 +24,14 @@ const AuthProvider = ({ children }) => {
   const [provider, setProvider] = useState(null);
   const [address, setAddress] = useState(null);
 
-  useEffect(() => {
-        // Commented out since login keeps happening on refresh
-    // handleLogin();
-  });
   const handleLogout = useCallback(async () => {
-      setIsLoggedIn(false)
-      setAddress(null)
-      setProvider(null)
-      setSigner(null)
-  }, [isLoggedIn]);
+    setIsLoggedIn(false);
+    setAddress(null);
+    setProvider(null);
+    setSigner(null);
+  }, []);
 
   const handleLogin = useCallback(async () => {
-    if (isLoggedIn) return
-    
     // A Web3Provider wraps a standard Web3 provider, which is
     // what MetaMask injects as window.ethereum into each page
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -73,9 +66,17 @@ const AuthProvider = ({ children }) => {
       signer,
       getShortAddress,
       handleLogin,
-      handleLogout
+      handleLogout,
     }),
-    [address, isLoggedIn, provider, signer, getShortAddress, handleLogin, handleLogout],
+    [
+      address,
+      isLoggedIn,
+      provider,
+      signer,
+      getShortAddress,
+      handleLogin,
+      handleLogout,
+    ],
   );
   return (
     <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>
