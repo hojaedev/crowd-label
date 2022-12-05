@@ -1,7 +1,13 @@
 import React from "react";
 
 import { createBrowserRouter } from "react-router-dom";
-import { MainPage, UploadPage, BrowsePage, LabelPage } from "../src/pages";
+import {
+  MainPage,
+  UploadPage,
+  BrowsePage,
+  LabelPage,
+  RewardPage,
+} from "../src/pages";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/label",
     element: <LabelPage />,
+  },
+  {
+    path: "/reward",
+    element: <RewardPage />,
   },
 ]);
 

@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BaseLayout } from "../components/Layout";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { useContract } from "../contexts/ContractContext";
+import config from "../config";
+import { parseUnits } from "ethers/lib/utils";
+import { toast } from "react-toastify";
 
 const LabelPage = () => {
   const [cropData, setCropData] = useState(null);
-  const [cropper, setCropper] = useState(null);
-  const [image, setImage] = useState(
-    "QmQTux7QbD8BYftFhDJdoJkmpfGEeHdSxx2g7jeVfEsryo",
-  );
+  const image = "QmSFt7LH1xnzyeYA9WbVTCoVYQKBMr1VpHbU5G5pypRNz2";
+
   const { label } = useContract();
 
   const handleClick = async () => {
@@ -20,19 +21,10 @@ const LabelPage = () => {
       cropData[2],
       cropData[3],
     );
-    addLabel.wait();
+    await addLabel.wait();
+    toast.success("Label added, proceeding to the next image.");
   };
 
-  const getCropData = () => {
-    if (typeof cropper !== "undefined") {
-      const x = cropper.getCroppedCanvas().toDataURL();
-      setCropData(x);
-      console.log(x);
-    }
-    const x = cropper.getCroppedCanvas().toDataURL();
-    setCropData(x);
-    console.log(x);
-  };
   const handleCrop = e => {
     const x = e.detail.x;
     const y = e.detail.y;
@@ -61,9 +53,6 @@ const LabelPage = () => {
           responsive={true}
           autoCropArea={1}
           checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
-          onInitialized={instance => {
-            setCropper(instance);
-          }}
           onChange={e => console.log(e)}
           guides={true}
           crop={handleCrop}

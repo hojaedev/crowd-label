@@ -3,7 +3,7 @@ import { BaseLayout } from "../components/Layout";
 import config from "../config";
 import { create } from "ipfs-http-client";
 import IPFSImage from "../components/IPFSImage";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { ComponentLayout } from "../components/Layout";
 import { useContract } from "../contexts/ContractContext";
 
@@ -47,7 +47,6 @@ const UploadPage = () => {
 
   return (
     <BaseLayout>
-      <ToastContainer />
       <ComponentLayout>
         <h1 className="text-xl font-extrabold pt-10 pb-10">Upload Images</h1>
         <div className="flex-row space-y-5">

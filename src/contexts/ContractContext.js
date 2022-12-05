@@ -8,7 +8,9 @@ import React, {
 import config from "../config";
 import { ethers } from "ethers";
 import storageContract from "../artifacts/contracts/1_Storage.sol/Storage.json";
-import labelContract from "../artifacts/contracts/3_Label.sol/Label.json";
+import tokenContract from "../artifacts/contracts/2_Token.sol/CrowdLabelToken.json";
+import vendorContract from "../artifacts/contracts/3_Vendor.sol/Vendor.json";
+import labelContract from "../artifacts/contracts/4_Label.sol/Label.json";
 import { useAuth } from "./AuthContext";
 
 const ContractContext = createContext();
@@ -23,6 +25,8 @@ const useContract = () => {
 
 const ContractProvider = ({ children }) => {
   const [storage, setStorage] = useState(null);
+  const [token, setToken] = useState(null);
+  const [vendor, setVendor] = useState(null);
   const [label, setLabel] = useState(null);
   const { signer } = useAuth();
   useEffect(() => {
@@ -33,7 +37,20 @@ const ContractProvider = ({ children }) => {
         signer,
       ),
     );
-
+    setToken(
+      new ethers.Contract(
+        config.contractAddress.token,
+        tokenContract.abi,
+        signer,
+      ),
+    );
+    setVendor(
+      new ethers.Contract(
+        config.contractAddress.vendor,
+        vendorContract.abi,
+        signer,
+      ),
+    );
     setLabel(
       new ethers.Contract(
         config.contractAddress.label,
@@ -41,14 +58,17 @@ const ContractProvider = ({ children }) => {
         signer,
       ),
     );
+    console.log({ storage, token, vendor, label });
   }, [signer]);
 
   const memoedValue = useMemo(
     () => ({
       storage,
+      token,
+      vendor,
       label,
     }),
-    [storage, label],
+    [storage, token, vendor, label],
   );
   return (
     <ContractContext.Provider value={memoedValue}>
