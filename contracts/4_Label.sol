@@ -60,6 +60,13 @@ contract Label {
     winners[0] = winner1.owner;
     winners[1] = winner2.owner;
     vendorContract.addReward(winners, 1);
+
+    uint256 x1;
+    uint256 y1;
+    uint256 x2;
+    uint256 y2;
+    (x1, y1, x2, y2) = getIntersectionCoord(winner1, winner2);
+    storageContract.setLabel(id, x1, y1, x2, y2);
   }
 
   function findWinners(
@@ -101,5 +108,19 @@ contract Label {
     uint256 x2 = Math.min(c1.x2, c2.x2);
     uint256 y2 = Math.min(c1.y2, c2.y2);
     return (x2 - x1) * (y2 - y1);
+  }
+
+  function getIntersectionCoord(
+    Coordinate memory c1,
+    Coordinate memory c2
+  ) private pure returns (uint256, uint256, uint256, uint256) {
+    if (c1.x2 <= c2.x1 || c1.x1 >= c2.x2 || c1.y2 <= c2.y1 || c1.y1 >= c2.y2) {
+      return (0, 0, 0, 0);
+    }
+    uint256 x1 = Math.max(c1.x1, c2.x1);
+    uint256 y1 = Math.max(c1.y1, c2.y1);
+    uint256 x2 = Math.min(c1.x2, c2.x2);
+    uint256 y2 = Math.min(c1.y2, c2.y2);
+    return (x1, y1, x2, y2);
   }
 }

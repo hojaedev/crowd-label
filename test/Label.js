@@ -7,10 +7,14 @@ const { expect } = require("chai");
 
 describe("Label Contract Test", async function () {
   async function loadContracts() {
+    const Token = await ethers.getContractFactory("CrowdLabelToken");
+    const token = await Token.deploy();
+    const Vendor = await ethers.getContractFactory("Vendor");
+    const vendor = await Vendor.deploy(token.address);
     const Storage = await ethers.getContractFactory("Storage");
-    const storage = await Storage.deploy();
+    const storage = await Storage.deploy(vendor.address);
     const Label = await ethers.getContractFactory("Label");
-    const label = await Label.deploy(storage.address);
+    const label = await Label.deploy(storage.address, vendor.address);
 
     return { storage, label };
   }
@@ -53,27 +57,58 @@ describe("Label Contract Test", async function () {
     }
   });
 
+  it("Should fetch the final label", async function () {
+    const { storage, label } = await loadContracts();
+    const signers = await ethers.getSigners();
+    await storage.store([imageHash]);
+
+    for (let i = 0; i < 3; i++) {
+      await label.connect(signers[i]).addLabel(imageHash, 100, 100, 200, 200);
+    }
+
+    for (let i = 2; i < 5; i++) {
+      await label
+        .connect(signers[i])
+        .addLabel(
+          imageHash,
+          100 + i * 5,
+          100 + i * 5,
+          200 + i * 5,
+          200 + i * 5,
+        );
+    }
+
+    const res = await storage.getAllImage(true);
+    const { x1, y1, x2, y2 } = res[0].label;
+    expect({ x1, y1, x2, y2 }).to.deep.equal({
+      x1: 100,
+      y1: 100,
+      x2: 200,
+      y2: 200,
+    });
+  });
+
   // TODO: rewrite this test
   // it("Should reward winners", async function () {
   //   const { storage, label } = await loadContracts();
   //   const signers = await ethers.getSigners();
   //   await storage.store([imageHash]);
 
-  //   for (let i = 0; i < 3; i++) {
-  //     await label.connect(signers[i]).addLabel(imageHash, 100, 100, 200, 200);
-  //   }
+  // for (let i = 0; i < 3; i++) {
+  //   await label.connect(signers[i]).addLabel(imageHash, 100, 100, 200, 200);
+  // }
 
-  //   for (let i = 2; i < 5; i++) {
-  //     await label
-  //       .connect(signers[i])
-  //       .addLabel(
-  //         imageHash,
-  //         100 + i * 5,
-  //         100 + i * 5,
-  //         200 + i * 5,
-  //         200 + i * 5,
-  //       );
-  //   }
+  // for (let i = 2; i < 5; i++) {
+  //   await label
+  //     .connect(signers[i])
+  //     .addLabel(
+  //       imageHash,
+  //       100 + i * 5,
+  //       100 + i * 5,
+  //       200 + i * 5,
+  //       200 + i * 5,
+  //     );
+  // }
 
   //   for (let i = 0; i < 2; i++) {
   //     const { amount, claimed } = await label.connect(signers[i]).getPayout();
