@@ -10,7 +10,7 @@ import { useContract } from "../contexts/ContractContext";
 const UploadPage = () => {
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [imageHash, setImageHash] = useState(null);
-  const {storage} = useContract();
+  const { storage } = useContract();
 
   const changeHandler = event => {
     setSelectedFiles(event.target.files);

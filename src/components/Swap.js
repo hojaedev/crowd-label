@@ -30,7 +30,7 @@ const Swap = ({ init }) => {
     } else {
       setSrc(crowl);
     }
-  }, [mode]);
+  }, [mode, crowl, signer, token, eth]);
 
   const handleSwap = async () => {
     if (mode === 0) {
@@ -53,13 +53,14 @@ const Swap = ({ init }) => {
     }
     toast.success("Swap successful");
     init();
+    setEth(0);
   };
 
   const getLabel = pad => {
     return labels[(mode + pad) % 2];
   };
   const handleInput = e => {
-    setSrc(e.target.value);
+    setSrc(Math.max(0, Math.min(e.target.value, getMax())));
   };
   const getMax = () => {
     return mode === 0 ? Number(eth) : Number(crowl);
@@ -84,6 +85,7 @@ const Swap = ({ init }) => {
             type="number"
             onChange={handleInput}
             max={getMax()}
+            min={0}
             value={src}
           />
           <h3 className="w-32">{getLabel(0)}</h3>

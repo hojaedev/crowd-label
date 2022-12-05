@@ -10,6 +10,7 @@ import { ethers } from "ethers";
 import storageContract from "../artifacts/contracts/1_Storage.sol/Storage.json";
 import tokenContract from "../artifacts/contracts/2_Token.sol/CrowdLabelToken.json";
 import vendorContract from "../artifacts/contracts/3_Vendor.sol/Vendor.json";
+import labelContract from "../artifacts/contracts/4_Label.sol/Label.json";
 import { useAuth } from "./AuthContext";
 
 const ContractContext = createContext();
@@ -26,6 +27,7 @@ const ContractProvider = ({ children }) => {
   const [storage, setStorage] = useState(null);
   const [token, setToken] = useState(null);
   const [vendor, setVendor] = useState(null);
+  const [label, setLabel] = useState(null);
   const { signer } = useAuth();
   useEffect(() => {
     setStorage(
@@ -49,6 +51,14 @@ const ContractProvider = ({ children }) => {
         signer,
       ),
     );
+    setLabel(
+      new ethers.Contract(
+        config.contractAddress.label,
+        labelContract.abi,
+        signer,
+      ),
+    );
+    console.log({ storage, token, vendor, label });
   }, [signer]);
 
   const memoedValue = useMemo(
@@ -56,8 +66,9 @@ const ContractProvider = ({ children }) => {
       storage,
       token,
       vendor,
+      label,
     }),
-    [storage, token, vendor],
+    [storage, token, vendor, label],
   );
   return (
     <ContractContext.Provider value={memoedValue}>

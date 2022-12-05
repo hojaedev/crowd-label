@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BaseLayout, ComponentLayout } from "../components/Layout";
 import { useContract } from "../contexts/ContractContext";
 import { useAuth } from "../contexts/AuthContext";
-import { ethers } from "ethers";
 import Swap from "../components/Swap";
-import { formatEth, formatCrowl } from "../utils/convert";
-import { useNavigate } from "react-router-dom";
+import { formatCrowl } from "../utils/convert";
 import { toast } from "react-toastify";
 
 const CROWL_TO_ETH = 1e-3;
@@ -15,7 +13,6 @@ const RewardPage = () => {
   const { signer } = useAuth();
   const [balance, setBalance] = useState(0);
   const [claimable, setClaimable] = useState(0);
-  const navigate = useNavigate("/reward");
 
   const init = async () => {
     setBalance(formatCrowl(await token.balanceOf(await signer.getAddress())));
@@ -27,7 +24,9 @@ const RewardPage = () => {
   };
 
   useEffect(() => {
-    init();
+    (async () => {
+      init();
+    })();
   }, []);
 
   const handleClaim = async () => {
