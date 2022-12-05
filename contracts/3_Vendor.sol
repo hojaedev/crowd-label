@@ -14,7 +14,17 @@ contract Vendor is Ownable {
   CrowdLabelToken token;
 
   // token price for ETH
-  uint256 public tokensPerEth = 100;
+  uint256 public tokensPerEth = 1e3;
+
+  struct Reward {
+    uint256 total;
+    uint256 claimed;
+  }
+  /**
+   * @notice use an array to track reward eligible addresses
+   */
+  Reward[] internal rewards;
+  mapping(address => uint256) internal rewardMap;
 
   // Event that log buy operation
   event BuyTokens(address buyer, uint256 amountOfETH, uint256 amountOfTokens);
@@ -22,6 +32,8 @@ contract Vendor is Ownable {
 
   constructor(address tokenAddress) {
     token = CrowdLabelToken(tokenAddress);
+    // empty 0 index reward to handle initializd struct indexes.
+    rewards.push();
   }
 
   /**
@@ -38,6 +50,7 @@ contract Vendor is Ownable {
       vendorBalance >= amountToBuy,
       "Vendor contract has not enough tokens in its balance"
     );
+    initUser(msg.sender);
 
     // Transfer token to the msg.sender
     bool sent = token.transfer(msg.sender, amountToBuy);
@@ -94,5 +107,41 @@ contract Vendor is Ownable {
 
     (bool sent, ) = msg.sender.call{value: address(this).balance}("");
     require(sent, "Failed to send user balance back to the owner");
+}
+
+  function userRewardEligible(address _addr) public view returns (bool) {
+    return rewardMap[_addr] != 0;
+  }
+
+  function initUser(address _addr) internal {
+    if (userRewardEligible(_addr)) return;
+    rewards.push(Reward(0, 0));
+    rewardMap[_addr] = rewards.length - 1;
+  }
+
+  /**
+   * @notice Add fixed amount rewards to address array.
+   */
+  function addReward(address[] memory _addrs, uint256 amount) external {
+    for (uint i = 0; i < _addrs.length; i++) {
+      initUser(_addrs[i]);
+      rewards[rewardMap[_addrs[i]]].total += amount * 1e18;
+    }
+  }
+
+  function claim() public {
+    initUser(msg.sender);
+    uint256 id = rewardMap[msg.sender];
+    uint256 toClaim = rewards[id].total - rewards[id].claimed;
+    require(toClaim > 0, "No rewards to claim");
+    token.transfer(msg.sender, toClaim);
+    rewards[id].claimed = rewards[id].total;
+  }
+
+  function getClaimable() public view returns (uint256) {
+    require(userRewardEligible(msg.sender), "User not eligible for rewards");
+    uint256 id = rewardMap[msg.sender];
+    uint256 toClaim = rewards[id].total - rewards[id].claimed;
+    return toClaim;
   }
 }
