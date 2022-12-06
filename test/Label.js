@@ -19,6 +19,9 @@ describe("Label Contract Test", async function () {
     return { storage, label };
   }
   const imageHash = "QmQTux7QbD8BYftFhDJdoJkmpfGEeHdSxx2g7jeVfEsryo";
+  const imageHash2 = "AAAAAA7QbD8BYftFhDJdoJkmpfGEeHdSxx2g7jeVfEsryo";
+  const imageHash3 = "BBBBBB7QbD8BYftFhDJdoJkmpfGEeHdSxx2g7jeVfEsryo";
+  const imageHash4 = "CCCCCC7QbD8BYftFhDJdoJkmpfGEeHdSxx2g7jeVfEsryo";
 
   it("Should add label", async function () {
     const { storage, label } = await loadContracts();
@@ -86,6 +89,34 @@ describe("Label Contract Test", async function () {
       x2: 200,
       y2: 200,
     });
+  });
+
+  it("Should return all unlabeled images by user", async function () {
+    const { storage, label } = await loadContracts();
+    await storage.store([imageHash]);
+    await storage.store([imageHash2]);
+    await storage.store([imageHash3]);
+    await storage.store([imageHash4]);
+    await label.addLabel(imageHash, 100, 100, 200, 200);
+    let unlabeledHashes = await label.getUnlabeledHashesByUser();
+    unlabeledHashes = unlabeledHashes.filter(hash => {
+      return hash.length != 0;
+    });
+    expect(unlabeledHashes).to.deep.equal([imageHash2, imageHash3, imageHash4]);
+
+    let unlabeledImages = await storage.getUnlabeledImagesByUser(
+      unlabeledHashes,
+    );
+    unlabeledImages = unlabeledImages.filter(unlabeledImage => {
+      return unlabeledImage.registered;
+    });
+    const res = [];
+
+    unlabeledImages.forEach(image => {
+      res.push(image.hash);
+    });
+
+    expect(res).to.deep.equal([imageHash2, imageHash3, imageHash4]);
   });
 
   // TODO: rewrite this test

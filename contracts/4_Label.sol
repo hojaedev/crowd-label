@@ -52,6 +52,27 @@ contract Label {
     return labels[id];
   }
 
+  function getUnlabeledHashesByUser() public view returns (string[] memory){
+    string[] memory hashes = storageContract.getImageHashes();
+    string[] memory ret = new string[](hashes.length);
+    for (uint256 i = 0; i < hashes.length; i++) {
+      string memory hash = hashes[i];
+      Coordinate[] memory coords = labels[hash];
+      bool found = false;
+      for (uint256 j = 0; j < labels[hash].length; j++) {
+        if (coords[j].owner == msg.sender) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        ret[i] = hash;
+      }
+    }
+
+    return ret;
+  }
+
   function reward(string memory id) private {
     Coordinate memory winner1;
     Coordinate memory winner2;

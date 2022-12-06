@@ -10,11 +10,11 @@ contract Storage {
     uint256 use_count;
     bool registered;
     string hash;
-    Label label;
+    FinalLabel label;
     address owner;
   }
 
-  struct Label {
+  struct FinalLabel {
     uint256 x1;
     uint256 y1;
     uint256 x2;
@@ -39,7 +39,7 @@ contract Storage {
         use_count: 0,
         registered: true,
         hash: k,
-        label: Label(0, 0, 0, 0),
+        label: FinalLabel(0, 0, 0, 0),
         owner: msg.sender
       });
       hashes.push(k);
@@ -80,6 +80,18 @@ contract Storage {
     return ret;
   }
 
+  function getUnlabeledImagesByUser(string[] memory unlabeledHashes) public view returns(File[] memory) {
+    File[] memory ret = new File[](hashes.length);
+    for (uint256 i = 0; i < unlabeledHashes.length; i++) {
+      ret[i] = (files[unlabeledHashes[i]]);
+    }
+    return ret;
+  }
+
+  function getImageHashes() external view returns (string[] memory) {
+    return hashes;
+  }
+
   function addLabelCount(string memory id) external {
     assert(files[id].registered == true);
     files[id].label_count++;
@@ -91,7 +103,7 @@ contract Storage {
 
   function setLabel(string memory id, uint256 x1, uint256 y1, uint256 x2, uint256 y2) external {
     assert(files[id].registered == true);
-    files[id].label = Label(x1, y1, x2, y2);
+    files[id].label = FinalLabel(x1, y1, x2, y2);
   }
 
   function downloadDataset(string[] memory ids) external {
