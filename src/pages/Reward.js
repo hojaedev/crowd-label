@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Swap from "../components/Swap";
 import { formatCrowl } from "../utils/convert";
 import { toast } from "react-toastify";
+import { ethers } from "ethers";
 
 const CROWL_TO_ETH = 1e-3;
 
@@ -16,6 +17,7 @@ const RewardPage = () => {
 
   const init = async () => {
     setBalance(formatCrowl(await token.balanceOf(await signer.getAddress())));
+    console.log(await vendor.getClaimable());
     setClaimable(formatCrowl(await vendor.getClaimable()));
   };
 
