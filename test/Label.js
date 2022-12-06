@@ -119,8 +119,9 @@ describe("Label Contract Test", async function () {
 
     expect(res).to.deep.equal([imageHash2, imageHash3, imageHash4]);
   });
+});
 
-  // TODO: rewrite this test
+// TODO: rewrite this test
 //   it("Should reward winners", async function () {
 //     const { storage, label } = await loadContracts();
 //     const signers = await ethers.getSigners();

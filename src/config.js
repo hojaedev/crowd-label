@@ -7,10 +7,10 @@ const config = {
     providerURL: "http://localhost:8545",
   },
   contractAddress: {
-    token: "0x73C68f1f41e4890D06Ba3e71b9E9DfA555f1fb46",
-    vendor: "0xD2D5e508C82EFc205cAFA4Ad969a4395Babce026",
-    storage: "0x2b639Cc84e1Ad3aA92D4Ee7d2755A6ABEf300D72",
-    label: "0xF85895D097B2C25946BB95C4d11E2F3c035F8f0C",
+    token: "0x5081a39b8A5f0E35a8D959395a630b68B74Dd30f",
+    vendor: "0x1fA02b2d6A771842690194Cf62D91bdd92BfE28d",
+    storage: "0xdbC43Ba45381e02825b14322cDdd15eC4B3164E6",
+    label: "0x04C89607413713Ec9775E14b954286519d836FEf",
   },
 };
 

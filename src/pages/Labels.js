@@ -38,7 +38,7 @@ const LabelPage = () => {
 
   const handleClick = async () => {
     const addLabel = await label.addLabel(
-      image,
+      unlabeledImages[index].hash,
       cropData[0],
       cropData[1],
       cropData[2],
@@ -54,13 +54,6 @@ const LabelPage = () => {
     setIndex(index + 1);
     if (index === unlabeledImages.length) {
       setIndex(0);
-    }
-
-    if (
-      unlabeledImages[index]?.hash ===
-      "QmWK8e6MuaEmcQf5DoQ41ZBFEfNVGGjXyDR8rL41HnjG77"
-    ) {
-      console.log("FOUDASDASDASDASDASDASDASDASDASDASD");
     }
   };
 
@@ -80,8 +73,7 @@ const LabelPage = () => {
   return (
     <BaseLayout>
       <div className="flex h-screen w-screen">
-        {unlabeledImages[index]?.hash ===
-        "QmWK8e6MuaEmcQf5DoQ41ZBFEfNVGGjXyDR8rL41HnjG77" ? (
+        {unlabeledImages.length > 0 ? (
           <Cropper
             style={{ width: "100%", height: "100%" }}
             zoomTo={0.5}
