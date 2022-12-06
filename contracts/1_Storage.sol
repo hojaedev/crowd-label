@@ -12,6 +12,7 @@ contract Storage {
     string hash;
     FinalLabel label;
     address owner;
+    address[] access;
   }
 
   struct FinalLabel {
@@ -34,13 +35,15 @@ contract Storage {
   function store(string[] memory ids) public {
     for (uint256 i = 0; i < ids.length; i++) {
       string memory k = ids[i];
+      address[] memory addr;
       files[k] = File({
         label_count: 0,
         use_count: 0,
         registered: true,
         hash: k,
         label: FinalLabel(0, 0, 0, 0),
-        owner: msg.sender
+        owner: msg.sender,
+        access: addr
       });
       hashes.push(k);
     }
@@ -101,22 +104,47 @@ contract Storage {
     return (files[id].registered, files[id].label_count);
   }
 
-  function setLabel(string memory id, uint256 x1, uint256 y1, uint256 x2, uint256 y2) external {
+  function setLabel(
+    string memory id,
+    uint256 x1,
+    uint256 y1,
+    uint256 x2,
+    uint256 y2
+  ) external {
     assert(files[id].registered == true);
     files[id].label = FinalLabel(x1, y1, x2, y2);
   }
 
-  function downloadDataset(string[] memory ids) external {
-    for (uint256 i = 0; i < ids.length; i++) {
+  function buyDataset(string[] memory ids) public {
+    uint256 size = ids.length;
+    for (uint256 i = 0; i < size; i++) {
       assert(files[ids[i]].registered == true);
     }
-    address[] memory uploaders = new address[](ids.length);
-    for (uint256 i = 0; i < ids.length; i++) {
+    address[] memory uploaders = new address[](size);
+    for (uint256 i = 0; i < size; i++) {
       files[ids[i]].use_count++;
       uploaders[i] = files[ids[i]].owner;
+      files[ids[i]].access.push(msg.sender);
     }
     vendor.addReward(uploaders, 1);
   }
 
-  // TODO: Distribute reward
+  function downloadDataset(
+    string[] memory ids
+  ) public view returns (string[] memory, FinalLabel[] memory) {
+    FinalLabel[] memory labels = new FinalLabel[](ids.length);
+    string[] memory imageHashes = new string[](ids.length);
+    for (uint i = 0; i < ids.length; i++) {
+      bool found = false;
+      for (uint j = 0; j < files[ids[i]].access.length; j++) {
+        if (files[ids[i]].access[j] == msg.sender) {
+          imageHashes[i] = ids[i];
+          labels[i] = files[ids[i]].label;
+          found = true;
+          break;
+        }
+      }
+    }
+    return (ids, labels);
+  }
 }

@@ -5,7 +5,6 @@ const { ethers } = require("hardhat");
 const { parseUnits } = require("ethers/lib/utils");
 
 const transferAmount = parseUnits("1000", 18);
-const buyAmount = parseUnits("1", 18);
 
 describe("Vendor", function () {
   // We define a fixture to reuse the same setup in every test.

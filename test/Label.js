@@ -4,6 +4,7 @@ const {
 } = require("@nomicfoundation/hardhat-network-helpers");
 const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
 
 describe("Label Contract Test", async function () {
   async function loadContracts() {
@@ -120,30 +121,30 @@ describe("Label Contract Test", async function () {
   });
 
   // TODO: rewrite this test
-  // it("Should reward winners", async function () {
-  //   const { storage, label } = await loadContracts();
-  //   const signers = await ethers.getSigners();
-  //   await storage.store([imageHash]);
+//   it("Should reward winners", async function () {
+//     const { storage, label } = await loadContracts();
+//     const signers = await ethers.getSigners();
+//     await storage.store([imageHash]);
 
-  // for (let i = 0; i < 3; i++) {
-  //   await label.connect(signers[i]).addLabel(imageHash, 100, 100, 200, 200);
-  // }
+//   for (let i = 0; i < 3; i++) {
+//     await label.connect(signers[i]).addLabel(imageHash, 100, 100, 200, 200);
+//   }
 
-  // for (let i = 2; i < 5; i++) {
-  //   await label
-  //     .connect(signers[i])
-  //     .addLabel(
-  //       imageHash,
-  //       100 + i * 5,
-  //       100 + i * 5,
-  //       200 + i * 5,
-  //       200 + i * 5,
-  //     );
-  // }
+//   for (let i = 2; i < 5; i++) {
+//     await label
+//       .connect(signers[i])
+//       .addLabel(
+//         imageHash,
+//         100 + i * 5,
+//         100 + i * 5,
+//         200 + i * 5,
+//         200 + i * 5,
+//       );
+//   }
 
-  //   for (let i = 0; i < 2; i++) {
-  //     const { amount, claimed } = await label.connect(signers[i]).getPayout();
-  //     expect({ amount, claimed }).to.deep.equal({ amount: 1, claimed: 0 });
-  //   }
-  // });
-});
+//     for (let i = 0; i < 2; i++) {
+//       const { amount, claimed } = await label.connect(signers[i]).getPayout();
+//       expect({ amount, claimed }).to.deep.equal({ amount: 1, claimed: 0 });
+//     }
+//   });
+// });
