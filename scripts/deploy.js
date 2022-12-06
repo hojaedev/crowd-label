@@ -13,8 +13,15 @@ async function main() {
   const Token = await hre.ethers.getContractFactory("CrowdLabelToken");
   const Vendor = await hre.ethers.getContractFactory("Vendor");
   const Label = await hre.ethers.getContractFactory("Label");
-
-  const targetAccount = (await ethers.getSigners())[2];
+  const signers = await ethers.getSigners();
+  const targetAccount = signers[2];
+  const otherSigners = [
+    signers[3],
+    signers[4],
+    signers[5],
+    signers[6],
+    signers[7],
+  ];
   const token = await Token.deploy();
   await token.deployed();
   const vendor = await Vendor.deploy(token.address);
@@ -42,8 +49,23 @@ async function main() {
     "QmT8nuXRDiNvbGVPwRVGxr5o6KZTXFFF6Acs86VtPNXKaQ",
     "QmWthUzu95EjmtYHTfGjWW1CCd71zAVwVe3Bpk16URGmEt",
   ];
+  // upload image
   await storage.connect(targetAccount).store(imageHash);
-  await storage.downloadDataset(imageHash);
+
+  imageHash.map(async (h, i) => {
+    if (i % 3 === 0) return;
+    await label.connect(otherSigners[0]).addLabel(h, 100, 100, 200, 200);
+    await label.connect(otherSigners[1]).addLabel(h, 100, 100, 200, 200);
+    for (let i = 2; i < 5; i++) {
+      await label
+        .connect(otherSigners[i])
+        .addLabel(h, 100 + i * 5, 100 + i * 5, 200 + i * 5, 200 + i * 5);
+    }
+  });
+
+  // set labels
+
+  await storage.buyDataset(imageHash);
   console.log(`token: "${token.address}",`);
   console.log(`vendor: "${vendor.address}",`);
   console.log(`storage: "${storage.address}",`);

@@ -80,8 +80,7 @@ const LabelPage = () => {
   return (
     <BaseLayout>
       <div className="flex h-screen w-screen">
-        {unlabeledImages[index]?.hash ===
-        "QmWK8e6MuaEmcQf5DoQ41ZBFEfNVGGjXyDR8rL41HnjG77" ? (
+        {unlabeledImages.length > 0 ? (
           <Cropper
             style={{ width: "100%", height: "100%" }}
             zoomTo={0.5}
